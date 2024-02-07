@@ -1,0 +1,52 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.tgz
+.env
+
+# vscode
+.vscode/targets.log
+.vscode/configurationCache.log
+.vscode/dryrun.log
+
+# Certificates
+*.pem
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# MACOS stuff
+.DS_Store
+
+# JetBrains
+.idea/
+
+# Build
+bin/
+cmd/bego-update-server/bin
+test/tools/bin
+release/
+
+# User Secrets
+conf
+
+# Test Asset
+test-data/.betsson
+assets/helm/
+
+# Packr Files
+*-packr.go
+
+test/experiments/
+
+# VScode
+modcache
