@@ -1,0 +1,1 @@
+docker run --name  ubuntu-test -d --entrypoint sh container-registry.test.betsson.tech/cache/ubuntu:22.04 -c "sleep 9999999"
