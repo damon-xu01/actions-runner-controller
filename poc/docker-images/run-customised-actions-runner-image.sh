@@ -1,0 +1,1 @@
+docker run --name  arc-test-customised-image -d --entrypoint sh container-registry.test.betsson.tech/betsson/arc-test:v0.0.6 -c "sleep 9999999"

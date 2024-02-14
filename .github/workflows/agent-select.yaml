@@ -1,0 +1,112 @@
+name: Agent Select
+
+on:
+  workflow_dispatch:
+    inputs:
+      AGENT:
+        type: choice
+        description: "Agent"
+        required: true
+        default: arc-runner-set
+        options:
+          - arc-runner-set
+          - arc-runner-set1
+
+jobs:
+  build:
+    runs-on: ${{ inputs.AGENT }}
+    steps:
+      - name: Print GH Repo Name
+        run: echo ${GITHUB_REPOSITORY#*/}
+
+      - name: Test checkout v2
+        uses: actions/checkout@v2
+
+      ## sudo is not supported  
+      # - name: Prepare permissions
+      #   run: sudo chown runner:runner -R ../*
+      - name: Prepare permissions
+        run: chown runner:runner -R ../*
+
+      - name: Test Command
+        run: |
+          echo "whoami" && whoami;
+          echo "pwd" && pwd;
+          echo "ping -c 1 127.0.0.1" && ping -c 1 127.0.0.1;
+          echo "date --help" && date --help;
+          echo "curl --help" && curl --help;
+          echo "tar --help" && tar --help;
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.3'
+          check-latest: false
+          cache: true
+          cache-dependency-path: "poc/go-test/go.sum"
+
+      # The version should be controlled in the base image
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with: 
+          dotnet-version: | 
+            5.0.x
+            6.0.x
+        
+      - name: Check Nuget Certificate
+        run: curl -SLk https://nuget-techsson.bde.local/upack/Techsson.UPack/download/Betsson.RootCA/9.0.0?contentOnly=tgz | tar -xz -C /usr/local/share/ca-certificates/ --strip=1 --wildcards LF/*.crt && update-ca-certificates
+        
+      - name: Check Nuget 1
+        run: curl -SLk "https://api.nuget.org/v3-flatcontainer/stackexchange.redis/index.json"
+
+      - name: Check Nuget 2
+        run: curl -SLk "https://api.nuget.org/v3-flatcontainer/microsoft.extensions.configuration/index.json"
+
+      - name: Check Nuget 3
+        run: curl -SLk "https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.testhost/index.json"
+
+      ## Some packages couldn't be found, so just skip
+      # - name: Nuget Restore
+      #   run: |
+      #     cd ./samples/Test_Solution
+      #     dotnet restore Techsson.Authentication.Api.sln --disable-parallel
+
+      - name: Check IP
+        run: curl https://api.ipify.org
+        
+      - name: Check Cypress
+        run: curl -I "https://download.cypress.io/desktop/12.14.0?platform=linux&arch=x64"
+
+      ## Unreachabe
+      # - name: Ping Proxy
+      #   run: curl -v "https://bego-proxy.apps.igaming-prod.euc1.betsson.tech/health/live"
+
+
+      - name: Bego Action Test
+        uses: BetssonGroup/bego-action@v3
+        with:
+          username: ${{ secrets.BEGO_USER }}
+          password: ${{ secrets.BEGO_PASSWORD }}
+          test-rancher-token: ${{ secrets.BEGO_TIERS_TEST_RANCHERTOKEN }}
+          prod-rancher-token: ${{ secrets.BEGO_TIERS_PROD_RANCHERTOKEN }}
+          arch: "linux_amd64"
+          workdir: ./
+          command: help
+
+      - name: Download Proget File
+        run: |
+          curl -v "https://sto-proget-01.bde.local/npm/OBG-NPM/camelcase/-/camelcase-4.1.0.tgz" -o "camelcase-4.1.0.tgz"
+          stat ./camelcase-4.1.0.tgz
+
+      - name: Change Node.js to [18.17.1]
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.1
+
+      - name: Get Node Version After Version Change
+        run: |
+          echo "Getting Node Version"
+          node -v
+
+          echo "Getting NPM Version"
+          npm -v
