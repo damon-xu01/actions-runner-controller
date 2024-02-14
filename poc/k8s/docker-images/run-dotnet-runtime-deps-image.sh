@@ -1,0 +1,1 @@
+docker run --name  dotnet-runtime -d --entrypoint sh mcr.microsoft.com/dotnet/runtime-deps:6.0-jammy -c "sleep 9999999"

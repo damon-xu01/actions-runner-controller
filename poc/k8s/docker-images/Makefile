@@ -1,5 +1,5 @@
 IMG ?= container-registry.test.betsson.tech/betsson/arc-test
-IMG_TAG ?= v0.0.1
+IMG_TAG ?= v0.0.6
 RUNNER_VERSION ?= 2.313.0
 
 docker-build:
