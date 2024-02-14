@@ -16,4 +16,4 @@ The project is from the open-source project [actions/actions-runner-controller](
 
 And the currently used release is [gha-runner-scale-set-0.8.2](https://github.com/actions/actions-runner-controller/releases/tag/gha-runner-scale-set-0.8.2). 
 
-For more information, please go to [poc/k8s/README.md](./poc/k8s//README.md)
+For more information, please go to [poc/README.md](./poc/README.md)
