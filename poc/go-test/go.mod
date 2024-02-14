@@ -1,4 +1,4 @@
-module Betssongroup/testtesttestremovemeplease/go-test
+module Betssongroup/actions-runner-controller/go-test
 
 go 1.21.3
 
