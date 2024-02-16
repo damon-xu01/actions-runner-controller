@@ -1,6 +1,6 @@
 ## githubConfigUrl is the GitHub url for where you want to configure runners
 ## ex: https://github.com/myorg/myrepo or https://github.com/myorg
-githubConfigUrl: ""
+githubConfigUrl: "https://github.com/BetssonGroup"
 
 ## githubConfigSecret is the k8s secrets to use when auth with GitHub API.
 ## You can choose to use GitHub App or a PAT token
@@ -199,6 +199,6 @@ template:
 ## In case the helm chart can't find the right service account, you can explicitly pass in the following value
 ## to help it finish RoleBinding with the right service account.
 ## Note: if your controller is installed to only watch a single namespace, you have to pass these values explicitly.
-# controllerServiceAccount:
-#   namespace: arc-system
-#   name: test-arc-gha-runner-scale-set-controller
+controllerServiceAccount:
+  namespace: arc-systems
+  name: arc-gha-rs-controller
